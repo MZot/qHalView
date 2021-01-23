@@ -1,7 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.4
-import QtQuick.Controls.Material 2.1
 
 Window {
     id: window
@@ -29,6 +28,8 @@ Window {
              id: lv
              anchors.fill: parent; 
              model: hal
+             clip: true
+             cacheBuffer:0
              delegate: Item {
                  height: 40; 
                  width: ListView.view.width
@@ -41,11 +42,11 @@ Window {
                   id:lineNum
                   anchors.left: parent.left
                   width:50
-                  height: parent.height
+                  height: parent.height - 1
                   color: 'lightgrey'
                   Text{
-                    anchors.fill: parent
-                    font.pixelSize: 25
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: 20
                     color: 'black'
                     text: model.i
                   }
@@ -54,7 +55,7 @@ Window {
                   id:tt
                   anchors.left: lineNum.right
                   text: model.line
-                  font.pixelSize: 25
+                  font.pixelSize: 26
                   color: 'white'
                  }
                  Rectangle{
@@ -66,7 +67,7 @@ Window {
                   color: value.text == 'False' ? 'red' : value.text == 'True' ? 'green' : value.text == '' ? bg.color :'grey'
                   Text{
                     id:value
-                    anchors.fill: parent
+                    anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 25
                     color: 'black'
                    }
@@ -74,10 +75,9 @@ Window {
                  
                  Timer{
                    id: delegateTimer
-                   interval: 200
+                   interval: 300
                    repeat: true
                    running: true
-                   triggeredOnStart: true
                    onTriggered: {
                      value.text = main.refresh(model.line)
                    }
